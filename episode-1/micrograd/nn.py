@@ -12,9 +12,7 @@ class Neuron:
         self.b = Value(random.uniform(-1, 1), label='b')
 
     def __call__(self, x):
-        """
-        Forward pass through the neuron.
-        """
+        # Forward pass through the neuron.
         if len(x) != len(self.w):
             raise ValueError(f"Input length {len(x)} does not match number of weights {len(self.w)}.")
 
@@ -28,16 +26,14 @@ class Neuron:
 
 class Layer:
     """
-    A fully connected layer of neurons.
+    Takes in the number of neurons/inputs from the previous layer (nin)
+    Returns a list of (nout) many neurons
     """
-
     def __init__(self, nin, nout):
         self.neurons = [Neuron(nin) for _ in range(nout)]
 
     def __call__(self, x):
-        """
-        Forward pass through the layer.
-        """
+        # Forward pass through the layer
         outs = [neuron(x) for neuron in self.neurons]
         return outs[0] if len(outs) == 1 else outs
 
@@ -48,9 +44,9 @@ class Layer:
 class MLP:
     """
     A multi-layer perceptron.
-    `nin` = number of inputs.
-    `nouts` = list of hidden/output layer sizes.
-    Example: MLP(2, [4, 4, 1]) has 2 inputs, two hidden layers of 4, and 1 output.
+    `nin` = number of inputs to the network.
+    `nouts` = a list of hidden/output layer along with sizes.
+    Example: MLP(2, [4, 4, 1]) creates a network with 2 inputs, two hidden layers of 4, and a 1 output.
     """
 
     def __init__(self, nin, nouts):
