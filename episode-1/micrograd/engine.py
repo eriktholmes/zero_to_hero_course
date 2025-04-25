@@ -2,10 +2,10 @@ import math
 
 
 class Value:
-    """
-    A scalar value node in a computation graph.
-    Supports automatic differentiation via backward propagation.
-    Inspired by Karpathy's micrograd, extended for experimentation.
+    """ 
+    Value class, as seen on Kaparthy's YouTube series! 
+    Added a few things to play around with
+    but really, I mostly followed along and enjoyed!
     """
 
     def __init__(self, data, _children=(), _op='', label='', grad=0):
@@ -22,12 +22,11 @@ class Value:
 
 
 
-    # === BACKWARD PROPAGATION ===
-    
+    # BACKWARD PROPOGATION
+    # 'TOPO SORT <https://www.geeksforgeeks.org/topological-sorting/>': Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u-v, vertex u comes before v in the ordering.
+    # Topo captures the relations we need to call backward on parent nodes before calling it on children. 
+    # This is what flow the gradients backwards through the neural net so we can perform our updates on the weights. 
     def backward(self):
-        """
-        Backward propagation of gradients from this node to its children
-        """
         topo = []
         visited = set()
         def build_topo(v):
@@ -45,11 +44,16 @@ class Value:
 
 
   
-    '''
+    """
     Here are all of the things we can do to Value objects! 
     First we list the so-called operator overloads
-    '''
-    # === OPERATOR OVERLOADS ===
+    Then we list the activation functions
+    """
+    
+    # "OPERATOR OVERLOADS"
+    # I tried to take some documentation suggestions from ChatGPT since I am fairly new to this!...
+    # Hopefully it makes it all more clear...
+    # Learned some new terms anyway!
     def __add__(self, other):
         other = other if isinstance(other, Value) else Value(other)
         out = Value(self.data + other.data, (self, other), '+')
@@ -101,8 +105,9 @@ class Value:
 
 
 
-    # === ACTIVATION FUNCTIONS ===
-  
+    # "ACTIVATION FUNCTIONS"
+    # Grouping all functions that are non-binary (i.e. only called on self)
+    # Hyperbolic tangent, this is the one used in Kaparthy's series and the first one I experimented with
     def tanh(self):
         """
         Hyperbolic tangent activation.
@@ -116,11 +121,10 @@ class Value:
         out._backward = _backward
         return out
 
-   
+
+
+    # ReLu: takes the linear information from the neuron and only actives if this is positive, otherwise the neuron remains inactive
     def relu(self):
-        """
-        ReLU activation: zero out negative values.
-        """
         out = Value(self.data if self.data > 0 else 0.0, (self, ), 'ReLu')
 
         def _backward():
@@ -130,11 +134,9 @@ class Value:
         return out
 
 
-
+    # Leaky relu: like relu but has non-zero gradient to the left of 0 (hence, still some activation)
+    # added this when learning about neuron death in relu? Will read more about this.
     def leaky_relu(self, alpha = .01):
-        """
-        Leaky ReLU: keeps a small gradient for x < 0.
-        """
         x = self.data
         out = Value(x if x > 0 else alpha*x, (self, ), 'leaky_ReLu')
 
@@ -144,11 +146,8 @@ class Value:
         return out
 
 
-
+    # Sigmoid activation: squashes values to [0, 1].
     def sigmoid(self):
-        """
-        Sigmoid activation: squashes values to [0, 1].
-        """
         x = self.data
         out = Value((math.exp(x))/(1 + math.exp(x)), (self, ), 'sigmoid')
 
@@ -159,11 +158,8 @@ class Value:
         return out
 
     
-
+    # exponentional (base e)
     def exp(self):
-        """
-        Exponential function.
-        """
         x = self.data
         out = Value(math.exp(x), (self, ), 'exp')
 
@@ -173,11 +169,8 @@ class Value:
         
         return out
 
-
+    # Natural log
     def log(self):
-        """
-        Natural logarithm.
-        """
         assert self.data > 0, "Log is undefined for non-positive values"
         out = Value(math.log(self.data), (self, ), 'Log')
 
