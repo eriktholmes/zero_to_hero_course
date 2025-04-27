@@ -1,8 +1,7 @@
-import matplotlib.pyplot as plt
-from episode_1.micrograd.engine import Value
-from episode_1.micrograd.nn import MLP
+import io
+from PIL import Image
 
-
+# XOR example
 # Data
 xs_raw = [[0,0], [0,1], [1,0], [1,1]]
 ys_raw = [0, 1, 1, 0]
@@ -11,20 +10,21 @@ xs = [[Value(x) for x in xs_raw[i]] for i in range(len(xs_raw))]
 ys = [Value(y) for y in ys_raw]
 
 
-# Model (played around with various hidden layer sizes (see some of the associated gifs))
-model = MLP(2, [4,1])
+# Model (played around with various hidden layer sizes (see some of the associated gifs)
+model = MLP(2, [8,4,1], activation='relu', final_activation='sigmoid')
 
 
 # Training loop
-alpha = 0.01
-steps = 500
+alpha = 0.05
+steps = 1000
 losses = []
 frames = []
+eps = 1e-8
 
 for k in range(steps):
-    # forward pass
+    # forward pass... loss function is cross entropy! 
     ypred = [model(x) for x in xs]
-    loss = sum(((ygt - yout)**2 for ygt, yout in zip(ys, ypred)), Value(0.0))
+    loss = sum((-1*(ygt*(yout + eps).log() + (Value(1)-ygt) * (Value(1)-(yout + eps)).log()) for ygt, yout in zip(ys, ypred)), Value(0.0))
     
     # Capturing loss data for visualization purposes (see associated graphs)
     losses.append(loss.data)
