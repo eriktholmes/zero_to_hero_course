@@ -21,4 +21,13 @@ A second experiment (non-linear) for the micrograd build
       - **bigger model**: two hidden layers of **8** and **4** neurons respectively and **1200** epochs:
         ![More layers...more fun](xor_decision_surface_8nhl_4nhl_1200_epochs.gif)
 
-## More to come!...
+
+---
+
+## Okay... what do the neurons learn??
+
+So I REALLY like the idea of interpretability and want to learn all that I can about it... so I am starting SMALL here. Towards this goal we can visualize what a model thinks neuron by neuron by creating an 'activation map' and then, after some slight tweaks to the nn drawing code from https://gist.github.com/craffel/2d727968c3aaebd10359, output the following diagram:
+
+  -  **XOR neural activity**:
+    ![NN Activity Map](https://github.com/user-attachments/assets/ef88d9fb-f8f0-4515-9172-2c0fc59ceab3)
+
