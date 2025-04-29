@@ -26,8 +26,9 @@ A second experiment (non-linear) for the micrograd build
 
 ## Okay... what do the neurons learn??
 
-So I REALLY like the idea of interpretability and want to learn all that I can about it... so I am starting SMALL here. Towards this goal we can visualize what a model thinks neuron by neuron by creating an 'activation map' and then, after some slight tweaks to the nn drawing code from https://gist.github.com/craffel/2d727968c3aaebd10359, output the following diagram:
+So I REALLY like the idea of interpretability and want to learn all that I can about it... I am starting SMALL here, and hopefully not nonsensically! Towards interpretability we can visualize what a model 'thinks' neuron by neuron by creating an 'activation map' and then, after some slight tweaks to the nn drawing code from https://gist.github.com/craffel/2d727968c3aaebd10359, output the following diagram. 
 
   -  **XOR neural activity**:
-    ![NN Activity Map](https://github.com/user-attachments/assets/ef88d9fb-f8f0-4515-9172-2c0fc59ceab3)
+    ![NN Activity Map](https://github.com/user-attachments/assets/a38106e7-82a8-4190-a801-6ab87b08333c)
 
+  - Okay... this is a bit hard to see! Basically, for each neuron we output an activation map that shows how each neuron responds to regions of the unit square (where is the neuron firing!?). We generally see **first layer** neurons learning to distinguish corners of the grid (i.e. the XOR inputs), and the **second layer** neurons seems to respond to 'diagonals'. The **output layer** then puts this together to produce the XOR decision surface like we saw above.
