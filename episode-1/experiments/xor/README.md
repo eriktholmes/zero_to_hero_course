@@ -5,9 +5,9 @@ A second experiment (non-linear) for the micrograd build
 ---
 
 ## Things that this one forced me to do/think about:
-  - **Altering activation functions in hidden/output layers.
+  - **Altering activation functions in hidden/output layers**.
       - Updated the neural net to accept activation inputs for hidden layers and a separate activation for output layers (tanh, sigmoid, relu, leaky_relu, None=> linear activation)
-  - ** Visualizing training behavior** using contour plots with matplotlib:
+  - **Visualizing training behavior** using contour plots with matplotlib:
     - Since the input is 2D we can visualize 'decision surfaces' as training progressed
     - Created two gifs to show how these decision boundaries evolved over time. 
 ---  
