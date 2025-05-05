@@ -18,3 +18,7 @@ We explored two experiments with the 2D binary classification data from 'sklearn
   
 > We included the code for the second experiment in our file as it was more successful and a bit different than the others in past experiments,
 'margin based classification' is certainly a good option here but maybe not for generalizing beyond given data!?
+
+
+Here is our decision boundary with experiment 2 above:
+![2d Decision Boundary](https://github.com/user-attachments/assets/51c45ff4-c65a-47c5-b68d-7f5c7f3110cc)
