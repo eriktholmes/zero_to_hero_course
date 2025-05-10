@@ -26,6 +26,7 @@ This folder contains the first stage of my hands-on machine learning journey, fo
   - **XOR**.
     The next step, *non-linear data*. 
     **Key insight**: in retrospect I should have used a margin based classifier (like hinge loss) here... alas, I did not. The cross-entropy loss worked but was not optimal. Nonetheless, we were able to visualize the evolution of the decision surface over the course of the training:
+    
       ![xor decision surface](experiments/xor/xor_decision_surface_8nhl_4nhl_1200_epochs.gif)
      - TO DO: rerun this with hinge loss for comparison!
         
